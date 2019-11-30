@@ -1,7 +1,6 @@
 * {
   outline: none;
   font-family: 'Varela Round', sans-serif;
-
 }
 
 body {
@@ -46,16 +45,16 @@ h1, h2, h3, h4, h5 {
   0%, 100% {
     transform: rotate(0deg);
   }
-  5% {
+  10% {
     transform: rotate(5deg);
   }
-  10% {
+  20% {
     transform: rotate(-5deg);
   }
-15% {
+50% {
     transform: rotate(3deg);
   }
-20% {
+70% {
     transform: rotate(-3deg);
   }
 }
@@ -113,9 +112,18 @@ body {
 }
 
 .timer {
-  background-color: green;
-  height: 20px;
+  background-color: #FFC763;
   transition: width 50ms;
+}
+
+.timer-container {
+  display: grid;
+  grid-gap: 8px;
+  grid-template-columns: 40px 1fr;
+}
+
+.timer-container i {
+  font-size: 32px;
 }
 
 .current-word {
@@ -197,6 +205,7 @@ body {
 }
 
 .team-option {
+  position: relative;
   background: lightgrey;
   border-radius: 8px;
   display: flex;
@@ -222,11 +231,11 @@ body {
 }
 
 .shake {
-  animation: shake 1s infinite;
+  animation: shake 500ms;
 }
 
-.blink {
-  animation: blink 1s infinite;
+.pulsate {
+  animation: pulsate 1s infinite;
 }
 
 .team-row--disabled {
@@ -243,10 +252,11 @@ body {
   border-radius: 999px;
   width: 24px;
   height: 24px;
-  background: black;
+  background: #222;
   position: absolute;
   color: white;
   font-weight: 700;
+  box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.3);
 }
 
 .points-bar-container {
@@ -305,4 +315,13 @@ body {
 
 .word {
   margin: 4px;
+}
+
+select {
+  background: #eee;
+  font-size: 18px;
+  padding: 8px;
+  border: solid grey 1px;
+  border-radius: 8px;
+  box-sizing: border-box;
 }

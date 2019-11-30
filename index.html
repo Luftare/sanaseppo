@@ -30,14 +30,25 @@
 
 <body>
   <div id="root">
+    <div v-if="view === 'settings'" class="view">
+      <h1>Valitse aihe</h1>
+      <select v-model="selectedWordSet">
+        <option v-for="wordSet in wordSets" :value="wordSet">{{wordSet.label}}</option>
+      </select>
+
+      <button class="button" :class="{ 'button--disabled': loading }" @click="confirmSettings"><i
+          class="fas fa-check"></i> Jatka</button>
+    </div>
+
     <div v-if="view === 'new-game'" class="view">
-      <h1><i class="fas fa-user-friends"></i> Joukkueet</h1>
+      <h1>Joukkueet</h1>
 
       <div class="container">
         <div class="team-options">
           <div v-for="team in teams" class="team-option shake" :style="{ background: team.color }"
             @click="removeTeam(team)">
             <i class="fas" :class="['fa-' + team.name]"></i>
+            <div class="badge"><i class="fas fa-times fa--fail"></i></div>
           </div>
         </div>
         <button class="button button--small button--success" @click="showTeamOptionsModal"><i
@@ -78,16 +89,18 @@
 
     <div v-if="view === 'round-lobby'" class="view view--scores">
       <div class="top-bar">
-        <button @click="newGame" class="button button--fail button--small"><i class="fas fa-redo"></i> Uusi
+        <button @click="newGame" class="button button--fail button--small"
+          :class="{ 'button--disabled': animatingPoints }"><i class="fas fa-redo"></i> Uusi
           peli</button>
       </div>
 
       <div class="container">
-        <div v-for="(team, i) in teams" class="team-row" :class="{ 'team-row--disabled': team.points >= maxPoints }">
+        <div v-for="(team, i) in teams" class="team-row"
+          :class="{ 'team-row--disabled': team.points >= maxPoints && currentTeamIndex !== i }">
           <div class="team-avatar" :class="{ 'pulsate': currentTeamIndex === i }">
             <i class="fas" :class="['fa-' + team.name]"></i>
-            <span v-if="!!team.rank" class="badge">{{team.rank}}.</span>
-
+            <span v-if="!!team.rank" class="badge"
+              :style="{ background: ['orange', 'grey', 'brown', 'black'][Math.min(team.rank - 1, 3)] }">{{team.rank}}.</span>
           </div>
 
           <div class="points-bar-container">
@@ -99,27 +112,31 @@
       </div>
 
       <button @click="startRound" class="button" :class="{ 'button--disabled': animatingPoints }"><i class="fas"
-          :class="['fa-' + currentTeam.name]"></i> jatka</button>
+          :class="['fa-' + currentTeam.name]"></i> Pelaa</button>
     </div>
 
     <div v-if="view === 'guess-word'" class="view">
-      <div class="timer" :style="{ width: timerStyle }"></div>
+      <div class="timer-container">
+        <i class="fas fa-stopwatch"></i>
+        <div class="timer" :style="{ width: timerStyle }"></div>
+      </div>
+
 
       <div class="current-word">{{currentWord}}</div>
 
       <div class="answer-buttons">
-        <button class="button button--success" @click="handleCorrectAnswer"><i class="fas fa-check"></i> Oikein</button>
         <button class="button button--fail" @click="handleWrongAnswer"><i class="fas fa-times"></i> Väärin</button>
+        <button class="button button--success" @click="handleCorrectAnswer"><i class="fas fa-check"></i> Oikein</button>
       </div>
     </div>
 
     <div v-if="view === 'round-recap'" class="view">
       <div class="container">
-        <h2><i class="fas fa-check fa--success"></i> Oikein</h2>
+        <h2><i class="fas fa-check fa--success"></i> Oikein {{guessedWords.length}}</h2>
         <div class="words">
           <div v-for="word in guessedWords" class="word">{{word}}</div>
         </div>
-        <h2><i class="fas fa-times fa--fail"></i> Väärin</h2>
+        <h2><i class="fas fa-times fa--fail"></i> Väärin {{passedWords.length}}</h2>
         <div class="words">
           <div v-for="word in passedWords" class="word">{{word}}</div>
         </div>

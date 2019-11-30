@@ -1,3 +1,17 @@
+const WORD_SETS = [{
+  label: 'Helppoja sanoja',
+  url: 'api/easy.json'
+}, {
+  label: 'Suomen kielen sanat',
+  url: 'api/words.json'
+}, {
+  label: 'Maiden nimet',
+  url: 'api/nations.json'
+}, {
+  label: 'Nisäkkäät, linnut ja kalat',
+  url: 'api/finnish-animals.json'
+}];
+
 const clamp = (v, min, max) => Math.max(min, Math.min(max, v));
 
 const sleep = time => new Promise(res => setTimeout(res, time));
@@ -5,9 +19,12 @@ const sleep = time => new Promise(res => setTimeout(res, time));
 new Vue({
   el: '#root',
   data: {
-    view: 'round-lobby',
+    view: 'settings',
+    wordSets: WORD_SETS,
+    selectedWordSet: WORD_SETS[0],
     currentTeamIndex: 0,
-    teams: [{ name: 'rocket', color: '#51ed80', points: 0 }, { name: 'paw', color: '#51ed80', points: 100, rank: 1 }, { name: 'beer', color: '#FF9580', points: 65 }, { name: 'cat', color: '#FF9580', points: 100, rank: 2 }],
+    // teams: [{ name: 'rocket', color: '#51ed80', points: 0, rank: null }, { name: 'paw', color: '#51ed80', points: 99, rank: null }, { name: 'beer', color: '#FF9580', points: 65, rank: null }, { name: 'cat', color: '#FF9580', points: 80, rank: null }],
+    teams: [],
     colors: ['#51ed80', '#5276E4', '#CE6ED5', '#FF73AC', '#FF9580', '#FFC763', '#F9F871'],
     showTeamOptions: false,
     selectedTeamOption: null,
@@ -16,11 +33,11 @@ new Vue({
     words: [],
     guessedWords: [],
     passedWords: [],
-    rankCounter: 1,
     wordIndex: 0,
     timer: 0,
     animatingPoints: false,
-    roundDuration: 6000,
+    loading: false,
+    roundDuration: 60000,
     tickInterval: 100,
     maxPoints: 100,
     roundPoints: 0,
@@ -55,9 +72,18 @@ new Vue({
     }
   },
   methods: {
-    newGame() {
+    async confirmSettings() {
+      this.loading = true;
+      const response = await fetch(this.selectedWordSet.url);
+      this.words = await response.json();
+      this.loading = false;
       this.view = 'new-game';
-      this.rankCounter = 1;
+    },
+    newGame() {
+      if (!confirm('Haluatko lopettaa nykyisen pelin?')) return;
+
+      this.view = 'settings';
+      this.currentTeamIndex = 0;
       this.roundPoints = 0;
       this.teams = [];
     },
@@ -66,9 +92,9 @@ new Vue({
       this.selectedTeamOption = null;
     },
     removeTeam(team) {
-      if (confirm('Poista joukkue?')) {
-        this.teams = this.teams.filter(t => t !== team);
-      }
+      if (!confirm('Haluatko poistaa joukkueen?')) return;
+
+      this.teams = this.teams.filter(t => t !== team);
     },
     showTeamOptionsModal() {
       this.showTeamOptions = true;
@@ -83,7 +109,6 @@ new Vue({
     },
     startGame() {
       this.view = 'round-lobby';
-      this.rankCounter = 1;
       this.roundPoints = 0;
     },
     startRound() {
@@ -115,7 +140,8 @@ new Vue({
       await sleep(1000);
 
       if (this.currentTeam.points === this.maxPoints) {
-        this.currentTeam.rank = this.rankCounter++;
+        const maxRank = this.teams.reduce((maxRank, team) => Math.max(maxRank, team.rank || 0), 0);
+        this.currentTeam.rank = maxRank + 1;
       }
 
       this.animatingPoints = false;
@@ -123,7 +149,8 @@ new Vue({
       const allTeamsFinished = !this.teams.find(team => team.points < this.maxPoints);
 
       if (allTeamsFinished) {
-        //do stuff...
+        alert('Peli loppui!');
+        return;
       } else {
         let nextIndex = (this.currentTeamIndex + 1) % this.teams.length;
 
@@ -153,6 +180,12 @@ new Vue({
         setTimeout(() => {
           element.classList.remove('current-word--bounce');
         }, 400);
+      }
+
+      const wordsLeft = this.words.length - this.consumedIndexes.length;
+
+      if (wordsLeft < 10) {
+        this.consumedIndexes = [];
       }
 
       let index = this.getRandomWordIndex();
