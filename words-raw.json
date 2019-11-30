@@ -1,0 +1,582 @@
+[
+  {
+    "s": {
+      "_text": "aakkosjärjestys"
+    }
+  },
+  {
+    "s": {
+      "_text": "aakkosnumeerinen"
+    }
+  },
+  {
+    "s": {
+      "_text": "aallonharja"
+    }
+  },
+  {
+    "s": {
+      "_text": "aallonmurtaja"
+    }
+  },
+  {
+    "s": {
+      "_text": "aallonpituus"
+    }
+  },
+  {
+    "s": {
+      "_text": "aallonpohja"
+    }
+  },
+  {
+    "s": {
+      "_text": "aaltoallas"
+    }
+  },
+  {
+    "s": {
+      "_text": "aaltoalue"
+    }
+  },
+  {
+    "s": {
+      "_text": "aaltoenergia"
+    }
+  },
+  {
+    "s": {
+      "_text": "aaltolevy"
+    }
+  },
+  {
+    "s": {
+      "_text": "aaltoliike"
+    }
+  },
+  {
+    "s": {
+      "_text": "aaltopahvi"
+    }
+  },
+  {
+    "s": {
+      "_text": "aaltopelti"
+    }
+  },
+  {
+    "s": {
+      "_text": "aaltopituus"
+    }
+  },
+  {
+    "s": {
+      "_text": "aaltosulje"
+    }
+  },
+  {
+    "s": {
+      "_text": "aaltosulku"
+    }
+  },
+  {
+    "s": {
+      "_text": "aaltosulkumerkki"
+    }
+  },
+  {
+    "s": {
+      "_text": "aaltoviiva"
+    }
+  },
+  {
+    "s": {
+      "_text": "aaltovoimala"
+    }
+  },
+  {
+    "s": {
+      "_text": "aamiaismajoitus"
+    }
+  },
+  {
+    "s": {
+      "_text": "aamiaistapaaminen"
+    }
+  },
+  {
+    "s": {
+      "_text": "aamiaistunti"
+    }
+  },
+  {
+    "s": {
+      "_text": "aamuaskare"
+    }
+  },
+  {
+    "s": {
+      "_text": "aamuateria"
+    }
+  },
+  {
+    "s": {
+      "_text": "aamuhartaus"
+    }
+  },
+  {
+    "s": {
+      "_text": "aamuhämärä"
+    }
+  },
+  {
+    "s": {
+      "_text": "aamujumalanpalvelus"
+    }
+  },
+  {
+    "s": {
+      "_text": "aamujuna"
+    }
+  },
+  {
+    "s": {
+      "_text": "aamukahdeksan"
+    }
+  },
+  {
+    "s": {
+      "_text": "aamukahvi"
+    }
+  },
+  {
+    "s": {
+      "_text": "aamukampa"
+    }
+  },
+  {
+    "s": {
+      "_text": "aamukaste"
+    }
+  },
+  {
+    "s": {
+      "_text": "aamukylmä"
+    }
+  },
+  {
+    "s": {
+      "_text": "aamulehti"
+    }
+  },
+  {
+    "s": {
+      "_text": "aamulenkki"
+    }
+  },
+  {
+    "s": {
+      "_text": "aamulypsy"
+    }
+  },
+  {
+    "s": {
+      "_text": "aamulähetys"
+    }
+  },
+  {
+    "s": {
+      "_text": "aamulämpö"
+    }
+  },
+  {
+    "s": {
+      "_text": "aamunavaus"
+    }
+  },
+  {
+    "s": {
+      "_text": "aamunkoite"
+    }
+  },
+  {
+    "s": {
+      "_text": "aamunkoitto"
+    }
+  },
+  {
+    "s": {
+      "_text": "aamunraikas"
+    }
+  },
+  {
+    "s": {
+      "_text": "aamunsarastus"
+    }
+  },
+  {
+    "s": {
+      "_text": "aamuntorkku"
+    }
+  },
+  {
+    "s": {
+      "_text": "aamunvirkku"
+    }
+  },
+  {
+    "s": {
+      "_text": "aamupahoinvointi"
+    }
+  },
+  {
+    "s": {
+      "_text": "aamupala"
+    }
+  },
+  {
+    "s": {
+      "_text": "aamupesu"
+    }
+  },
+  {
+    "s": {
+      "_text": "aamupuoli"
+    }
+  },
+  {
+    "s": {
+      "_text": "aamupäivisin"
+    }
+  },
+  {
+    "s": {
+      "_text": "aamupäivä"
+    }
+  },
+  {
+    "s": {
+      "_text": "aamurusko"
+    }
+  },
+  {
+    "s": {
+      "_text": "aamuruuhka"
+    }
+  },
+  {
+    "s": {
+      "_text": "aamutakki"
+    }
+  },
+  {
+    "s": {
+      "_text": "aamutohveli"
+    }
+  },
+  {
+    "s": {
+      "_text": "aamutorkku"
+    }
+  },
+  {
+    "s": {
+      "_text": "aamutossu"
+    }
+  },
+  {
+    "s": {
+      "_text": "aamutähti"
+    }
+  },
+  {
+    "s": {
+      "_text": "aamu-uninen"
+    }
+  },
+  {
+    "s": {
+      "_text": "aamu-unisuus"
+    }
+  },
+  {
+    "s": {
+      "_text": "aamu-uutiset"
+    }
+  },
+  {
+    "s": {
+      "_text": "aamuvarhain"
+    }
+  },
+  {
+    "s": {
+      "_text": "aamuvarhainen"
+    }
+  },
+  {
+    "s": {
+      "_text": "aamuvartio"
+    }
+  },
+  {
+    "s": {
+      "_text": "aamuvirkku"
+    }
+  },
+  {
+    "s": {
+      "_text": "aamuvoimistelu"
+    }
+  },
+  {
+    "s": {
+      "_text": "aamuvuoro"
+    }
+  },
+  {
+    "s": {
+      "_text": "aamuyö"
+    }
+  },
+  {
+    "s": {
+      "_text": "aapasuo"
+    }
+  },
+  {
+    "s": {
+      "_text": "aapiskirja"
+    }
+  },
+  {
+    "s": {
+      "_text": "aapiskukko"
+    }
+  },
+  {
+    "s": {
+      "_text": "aarnialue"
+    }
+  },
+  {
+    "s": {
+      "_text": "aarnihauta"
+    }
+  },
+  {
+    "s": {
+      "_text": "aarnihonka"
+    }
+  },
+  {
+    "s": {
+      "_text": "aarnikotka"
+    }
+  },
+  {
+    "s": {
+      "_text": "aarniohauta"
+    }
+  },
+  {
+    "s": {
+      "_text": "aarniometsä"
+    }
+  },
+  {
+    "s": {
+      "_text": "aarnipuu"
+    }
+  },
+  {
+    "s": {
+      "_text": "aarnituli"
+    }
+  },
+  {
+    "s": {
+      "_text": "aarnivalkea"
+    }
+  },
+  {
+    "s": {
+      "_text": "aaroninparta"
+    }
+  },
+  {
+    "s": {
+      "_text": "aarreaitta"
+    }
+  },
+  {
+    "s": {
+      "_text": "aarrehauta"
+    }
+  },
+  {
+    "s": {
+      "_text": "aarrekammio"
+    }
+  },
+  {
+    "s": {
+      "_text": "aarrekätkö"
+    }
+  },
+  {
+    "s": {
+      "_text": "aarrelöytö"
+    }
+  },
+  {
+    "s": {
+      "_text": "aarretuli"
+    }
+  },
+  {
+    "s": {
+      "_text": "aarrevalkea"
+    }
+  },
+  {
+    "s": {
+      "_text": "aarteenetsijä"
+    }
+  },
+  {
+    "s": {
+      "_text": "aasinsilta"
+    }
+  },
+  {
+    "s": {
+      "_text": "aataminaikainen"
+    }
+  },
+  {
+    "s": {
+      "_text": "aataminomena"
+    }
+  },
+  {
+    "s": {
+      "_text": "aataminpuku"
+    }
+  },
+  {
+    "s": {
+      "_text": "aatehistoria"
+    }
+  },
+  {
+    "s": {
+      "_text": "aatekilpailu"
+    }
+  },
+  {
+    "s": {
+      "_text": "aatelisarvo"
+    }
+  },
+  {
+    "s": {
+      "_text": "aatelisherra"
+    }
+  },
+  {
+    "s": {
+      "_text": "aateliskalenteri"
+    }
+  },
+  {
+    "s": {
+      "_text": "aatelisnenä"
+    }
+  },
+  {
+    "s": {
+      "_text": "aatelissuku"
+    }
+  },
+  {
+    "s": {
+      "_text": "aatelissääty"
+    }
+  },
+  {
+    "s": {
+      "_text": "aatelisvaakuna"
+    }
+  },
+  {
+    "s": {
+      "_text": "aatemaailma"
+    }
+  },
+  {
+    "s": {
+      "_text": "aaterakennelma"
+    }
+  },
+  {
+    "s": {
+      "_text": "aatesisar"
+    }
+  },
+  {
+    "s": {
+      "_text": "aatesuunta"
+    }
+  },
+  {
+    "s": {
+      "_text": "aatetoveri"
+    }
+  },
+  {
+    "s": {
+      "_text": "aateveli"
+    }
+  },
+  {
+    "s": {
+      "_text": "aatevirtaus"
+    }
+  },
+  {
+    "s": {
+      "_text": "aatonaatto"
+    }
+  },
+  {
+    "s": {
+      "_text": "aattoilta"
+    }
+  },
+  {
+    "s": {
+      "_text": "aavejuna"
+    }
+  },
+  {
+    "s": {
+      "_text": "aavekipu"
+    }
+  },
+  {
+    "s": {
+      "_text": "aavelaiva"
+    }
+  },
+  {
+    "s": {
+      "_text": "aavistuksenomainen"
+    }
+  },
+  {
+    "s": {
+      "_text": "aavistuslähtö"
+    }
+  }
+]

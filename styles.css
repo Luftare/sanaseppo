@@ -1,0 +1,308 @@
+* {
+  outline: none;
+  font-family: 'Varela Round', sans-serif;
+
+}
+
+body {
+  color: #222;
+}
+
+h1, h2, h3, h4, h5 {
+  margin: 0;
+}
+
+@keyframes bounce {
+  0% {
+    transform: scale(0.8, 0.8);
+  }
+  15% {
+    transform: scale(1.2, 1.2);
+  }
+  100% {
+    transform: scale(1, 1);
+  }
+}
+
+@keyframes pulsate {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  20% {
+    transform: scale(0.7);
+    opacity: 0.5;
+  }
+  40% {
+    transform: scale(1.1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes shake {
+  0%, 100% {
+    transform: rotate(0deg);
+  }
+  5% {
+    transform: rotate(5deg);
+  }
+  10% {
+    transform: rotate(-5deg);
+  }
+15% {
+    transform: rotate(3deg);
+  }
+20% {
+    transform: rotate(-3deg);
+  }
+}
+
+@keyframes pulsate {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  20% {
+    transform: scale(0.7);
+    opacity: 0.5;
+  }
+  40% {
+    transform: scale(1.1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes appear {
+  0% {
+    transform: translateY(8px);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+body {
+  height: 100vh;
+  overflow: hidden;
+  padding: 24px 12px;
+  margin: 0;
+  box-sizing: border-box;
+  display: flex;
+}
+
+#root {
+  display: flex;
+  flex-grow: 1;
+}
+
+.view {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex-grow: 1;
+}
+
+.timer {
+  background-color: green;
+  height: 20px;
+  transition: width 50ms;
+}
+
+.current-word {
+  text-align: center;
+  font-size: 32px;
+  text-transform: capitalize;
+}
+
+.current-word--bounce {
+  animation: bounce 200ms;
+}
+
+.answer-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 16px;
+}
+
+.round-points {
+  font-size: 42px;
+  text-align: center;
+}
+
+.button {
+  border: none;
+  box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.3);
+  border-radius: 8px;
+  color: white;
+  background: #5276E4;
+  font-size: 24px;
+  text-transform: uppercase;
+  transition: all 50ms;
+  min-height: 64px;
+}
+
+.button--small {
+  font-size: 18px;
+  min-height: 40px;
+}
+
+.button:active {
+  box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.3);
+  transform: translate(2px, 2px);
+}
+
+.button--success {
+  background: #51ed80;
+}
+
+.button--fail {
+  background: #FF9580;
+}
+
+.button--disabled {
+  pointer-events: none;
+  background: lightgrey;
+}
+
+.fa--success {
+  color: #51ed80;
+}
+
+.fa--fail {
+  color: #FF9580;
+}
+
+.text-input {
+  border: solid #999 2px;
+  border-radius: 8px;
+  font-size: 16px;
+  padding: 0 8px;
+  box-sizing: border-box;
+}
+
+.team-options {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+  grid-gap: 8px;
+}
+
+.team-option {
+  background: lightgrey;
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+  min-width: 50px;
+  font-size: 36px;
+}
+
+.team-row {
+  display: grid;
+  grid-template-columns: 48px 1fr;
+  grid-gap: 12px;
+}
+
+.team-avatar {
+  position: relative;
+  font-size: 42px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.shake {
+  animation: shake 1s infinite;
+}
+
+.blink {
+  animation: blink 1s infinite;
+}
+
+.team-row--disabled {
+  opacity: 0.3;
+}
+
+.badge {
+  top: -8px;
+  right: -8px;
+  font-size: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 999px;
+  width: 24px;
+  height: 24px;
+  background: black;
+  position: absolute;
+  color: white;
+  font-weight: 700;
+}
+
+.points-bar-container {
+  background: #eee;
+}
+
+.points-bar {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  transition: width 700ms;
+}
+
+.points-bar > span {
+  transform: translateX(16px);
+}
+
+.modal-box {
+  width: calc(100% - 32px);
+  background: white;
+  border-radius: 16px;
+  padding: 32px;
+  box-sizing: border-box;
+  animation: appear 600ms;
+  display: grid;
+  grid-gap: 16px;
+}
+
+.modal {
+  z-index: 10;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.7);
+}
+
+.container {
+  display: grid;
+  grid-gap: 16px;
+}
+
+.top-bar {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.words {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.word {
+  margin: 4px;
+}

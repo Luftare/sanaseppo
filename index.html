@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <!-- <link rel="icon" href="images/icons/icon-128.png" /> -->
+  <title>Sanaseppo</title>
+
+  <link href="https://fonts.googleapis.com/css?family=Varela+Round&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" />
+  <link type="text/css" href="styles.css" rel="stylesheet" />
+
+  <!-- iOS equivalent to "icons" @manifest.json -->
+  <!-- <link rel="apple-touch-icon" href="images/icons/icon-96.png" /> -->
+
+  <!-- iOS equivalent to "icons" @manifest.json -->
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+
+  <!-- iOS top bar styling -->
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+  <!-- iOS equivalent to "theme_color" @manifest.json -->
+  <meta name="theme-color" content="#ffffff" />
+
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.min.js"></script>
+  <script defer src="app.js"></script>
+</head>
+
+<body>
+  <div id="root">
+    <div v-if="view === 'new-game'" class="view">
+      <h1><i class="fas fa-user-friends"></i> Joukkueet</h1>
+
+      <div class="container">
+        <div class="team-options">
+          <div v-for="team in teams" class="team-option shake" :style="{ background: team.color }"
+            @click="removeTeam(team)">
+            <i class="fas" :class="['fa-' + team.name]"></i>
+          </div>
+        </div>
+        <button class="button button--small button--success" @click="showTeamOptionsModal"><i
+            class="fas fa-user-plus"></i> Lisää joukkue</button>
+      </div>
+
+      <button class="button" :class="{ 'button--disabled': teams.length === 0 }" @click="startGame"><i
+          class="fas fa-check"></i>
+        Jatka</button>
+
+      <div class="modal" v-if="showTeamOptions">
+        <div class="modal-box">
+          <h3>Valitse kuva</h3>
+          <div class="team-options">
+            <div v-for="teamOption in availableTeams" class="team-option" @click="selectTeamOption(teamOption)">
+              <i class="fas" :class="['fa-' + teamOption]"></i>
+            </div>
+          </div>
+          <button class="button button--fail button--small" @click="cancelAddTeam"><i class="fas fa-times"></i>
+            Peruuta</button>
+        </div>
+      </div>
+
+      <div class="modal" v-if="selectedTeamOption">
+        <div class="modal-box">
+          <h3>Valitse väri</h3>
+          <div class="team-options">
+            <div v-for="color in colors" class="team-option" :style="{ background: color }"
+              @click="selectTeamColor(color)">
+              <i class="fas" :class="['fa-' + selectedTeamOption]"></i>
+            </div>
+          </div>
+          <button class="button button--fail button--small" @click="cancelAddTeam"><i class="fas fa-times"></i>
+            Peruuta</button>
+        </div>
+      </div>
+    </div>
+
+    <div v-if="view === 'round-lobby'" class="view view--scores">
+      <div class="top-bar">
+        <button @click="newGame" class="button button--fail button--small"><i class="fas fa-redo"></i> Uusi
+          peli</button>
+      </div>
+
+      <div class="container">
+        <div v-for="(team, i) in teams" class="team-row" :class="{ 'team-row--disabled': team.points >= maxPoints }">
+          <div class="team-avatar" :class="{ 'pulsate': currentTeamIndex === i }">
+            <i class="fas" :class="['fa-' + team.name]"></i>
+            <span v-if="!!team.rank" class="badge">{{team.rank}}.</span>
+
+          </div>
+
+          <div class="points-bar-container">
+            <div class="points-bar" :style="{ background: team.color, width: 100 * (team.points / maxPoints) + '%' }">
+              <span>{{team.points}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <button @click="startRound" class="button" :class="{ 'button--disabled': animatingPoints }"><i class="fas"
+          :class="['fa-' + currentTeam.name]"></i> jatka</button>
+    </div>
+
+    <div v-if="view === 'guess-word'" class="view">
+      <div class="timer" :style="{ width: timerStyle }"></div>
+
+      <div class="current-word">{{currentWord}}</div>
+
+      <div class="answer-buttons">
+        <button class="button button--success" @click="handleCorrectAnswer"><i class="fas fa-check"></i> Oikein</button>
+        <button class="button button--fail" @click="handleWrongAnswer"><i class="fas fa-times"></i> Väärin</button>
+      </div>
+    </div>
+
+    <div v-if="view === 'round-recap'" class="view">
+      <div class="container">
+        <h2><i class="fas fa-check fa--success"></i> Oikein</h2>
+        <div class="words">
+          <div v-for="word in guessedWords" class="word">{{word}}</div>
+        </div>
+        <h2><i class="fas fa-times fa--fail"></i> Väärin</h2>
+        <div class="words">
+          <div v-for="word in passedWords" class="word">{{word}}</div>
+        </div>
+      </div>
+      <button class="button" @click="countRoundPoints"><i class="fas fa-check"></i> Jatka</button>
+    </div>
+  </div>
+</body>
+
+</html>
