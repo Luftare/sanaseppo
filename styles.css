@@ -1,3 +1,7 @@
+:root {
+  --vh: 1vh;
+}
+
 * {
   outline: none;
   font-family: 'Varela Round', sans-serif;
@@ -89,6 +93,7 @@ h1, h2, h3, h4, h5 {
 body {
   color: #222;
   height: 100vh;
+  height: calc(var(--vh, 1vh) * 100);
   padding: 16px;
   margin: 0;
   box-sizing: border-box;
@@ -152,7 +157,7 @@ body {
   font-size: 18px;
   text-transform: uppercase;
   transition: all 50ms;
-  min-height: 64px;
+  min-height: 62px;
 }
 
 .button--small {
@@ -300,6 +305,7 @@ body {
   align-items: center;
   width: 100vw;
   height: 100vh;
+  height: calc(var(--vh, 1vh) * 100);
   background: rgba(0, 0, 0, 0.7);
 }
 
