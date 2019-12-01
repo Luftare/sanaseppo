@@ -92,7 +92,6 @@ h1, h2, h3, h4, h5 {
 
 body {
   height: 100vh;
-  overflow: hidden;
   padding: 24px 12px;
   margin: 0;
   box-sizing: border-box;
