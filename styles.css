@@ -3,10 +3,6 @@
   font-family: 'Varela Round', sans-serif;
 }
 
-body {
-  color: #222;
-}
-
 h1, h2, h3, h4, h5 {
   margin: 0;
 }
@@ -91,8 +87,9 @@ h1, h2, h3, h4, h5 {
 }
 
 body {
+  color: #222;
   height: 100vh;
-  padding: 24px 12px;
+  padding: 16px;
   margin: 0;
   box-sizing: border-box;
   display: flex;
@@ -152,7 +149,7 @@ body {
   border-radius: 8px;
   color: white;
   background: #5276E4;
-  font-size: 24px;
+  font-size: 18px;
   text-transform: uppercase;
   transition: all 50ms;
   min-height: 64px;
@@ -182,7 +179,7 @@ body {
 }
 
 .button i {
-  margin-right: 4px;
+  margin-right: 2px;
 }
 
 .fa--success {
@@ -326,6 +323,7 @@ body {
 }
 
 .word {
+  font-size: 14px;
   margin: 4px;
 }
 
