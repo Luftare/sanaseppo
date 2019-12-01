@@ -1,0 +1,26 @@
+{
+  "name": "Sanaseppo",
+  "short_name": "Sanaseppo",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#333",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "assets/icons/icon-180.jpg",
+      "type": "image/jpeg",
+      "sizes": "180x180"
+    },
+    {
+      "src": "assets/icons/icon-192.jpg",
+      "type": "image/jpeg",
+      "sizes": "192x192"
+    },
+    {
+      "src": "assets/icons/icon-512.jpg",
+      "type": "image/jpeg",
+      "sizes": "512x512"
+    }
+  ]
+}
