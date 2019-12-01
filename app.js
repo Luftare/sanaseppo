@@ -67,6 +67,9 @@ new Vue({
     setInterval(() => this.handleTick(), this.tickInterval);
   },
   computed: {
+    gameOver() {
+      return !this.teams.find(t => t.points < this.maxPoints);
+    },
     availableTeams() {
       return this.teamOptions.filter(name => !this.teams.map(({ name }) => name).includes(name));
     },
@@ -95,7 +98,7 @@ new Vue({
       this.view = 'new-game';
     },
     newGame() {
-      if (!confirm('Haluatko lopettaa nykyisen pelin?')) return;
+      if (!this.gameOver && !confirm('Haluatko lopettaa nykyisen pelin?')) return;
 
       this.view = 'settings';
       this.currentTeamIndex = 0;
@@ -164,6 +167,7 @@ new Vue({
       const allTeamsFinished = !this.teams.find(team => team.points < this.maxPoints);
 
       if (allTeamsFinished) {
+        await sleep(1000);
         alert('Peli loppui!');
         return;
       } else {
