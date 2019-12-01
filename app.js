@@ -51,6 +51,8 @@ new Vue({
     wordIndex: 0,
     timer: 0,
     animatingPoints: false,
+    guessTimeoutDuration: 1000,
+    guessTimeout: false,
     loading: false,
     roundDuration: 60000,
     tickInterval: 100,
@@ -107,6 +109,7 @@ new Vue({
       if (!this.gameOver && !confirm('Haluatko lopettaa nykyisen pelin?')) return;
 
       this.view = 'settings';
+      this.guessTimeout = false;
       this.currentTeamIndex = 0;
       this.roundPoints = 0;
       this.teams = [];
@@ -187,6 +190,12 @@ new Vue({
       }
     },
     handleCorrectAnswer() {
+      if (this.guessTimeout) return;
+
+      this.guessTimeout = true;
+      setTimeout(() => {
+        this.guessTimeout = false;
+      }, this.guessTimeoutDuration);
       this.guessedWords.push(this.currentWord);
       this.roundPoints += this.selectedMode.correctPoints;
       this.randomizeWordIndex();

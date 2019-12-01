@@ -138,7 +138,8 @@
 
       <div class="answer-buttons">
         <button class="button button--fail" @click="handleWrongAnswer"><i class="fas fa-times"></i> Väärin</button>
-        <button class="button button--success" @click="handleCorrectAnswer"><i class="fas fa-check"></i> Oikein</button>
+        <button class="button button--success" :class="{ 'button--disabled': guessTimeout }"
+          @click="handleCorrectAnswer"><i class="fas fa-check"></i> Oikein</button>
       </div>
     </div>
 
