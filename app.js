@@ -1,3 +1,22 @@
+function registerServiceWorker() {
+  const serviceWorkerSupported = 'serviceWorker' in navigator;
+
+  if (serviceWorkerSupported) {
+    navigator.serviceWorker
+      .register('sw.js')
+      .then(reg => console.log('service worker registered'))
+      .catch(err => console.log('service worker not registered', err));
+  }
+}
+
+function sound(name) {
+  new Howl({
+    usingWebAudio: true,
+    src: [`assets/audio/${name}`],
+    volume: 0.9,
+  }).play();
+}
+
 function handleResize() {
   const vh = window.innerHeight * 0.01;
   document.documentElement.style.setProperty('--vh', `${vh}px`);
@@ -62,6 +81,8 @@ new Vue({
     failPoints: -1
   },
   async mounted() {
+    registerServiceWorker();
+
     setTimeout(handleResize, 500);
 
     this.randomizeWordIndex();
@@ -144,6 +165,7 @@ new Vue({
       this.timer = this.roundDuration;
       this.guessedWords = [];
       this.passedWords = [];
+      sound('tap.wav');
     },
     handleTick() {
       const previousTime = this.timer;
@@ -156,17 +178,23 @@ new Vue({
     },
     handleTimeEnd() {
       this.view = 'round-recap';
+      sound('bling.wav');
     },
     async countRoundPoints() {
       this.animatingPoints = true;
       this.view = 'round-lobby';
 
       await sleep(500);
+      if (this.roundPoints !== 0) {
+        sound(this.roundPoints > 0 ? 'rise.wav' : 'fall.wav');
+      }
+
       this.currentTeam.points = clamp(this.currentTeam.points + this.roundPoints, 0, this.maxPoints);
       this.roundPoints = 0;
-      await sleep(500);
+      await sleep(700);
 
       if (this.currentTeam.points === this.maxPoints) {
+        sound('victory.wav');
         const maxRank = this.teams.reduce((maxRank, team) => Math.max(maxRank, team.rank || 0), 0);
         this.currentTeam.rank = maxRank + 1;
       }
@@ -193,6 +221,7 @@ new Vue({
       if (this.guessTimeout) return;
 
       this.guessTimeout = true;
+      sound('correct.wav');
       setTimeout(() => {
         this.guessTimeout = false;
       }, this.guessTimeoutDuration);
@@ -201,6 +230,7 @@ new Vue({
       this.randomizeWordIndex();
     },
     handleWrongAnswer() {
+      sound('wrong.wav');
       this.passedWords.push(this.currentWord);
       this.roundPoints += this.selectedMode.passPoints;
       this.randomizeWordIndex();
