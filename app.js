@@ -12,6 +12,11 @@ const WORD_SETS = [{
   url: 'api/finnish-animals.json'
 }];
 
+const MODES = [[10, -1], [5, -1], [5, 0], [10, -10]].map(([correctPoints, passPoints]) => ({
+  correctPoints, passPoints,
+  label: `Oikea: +${correctPoints}p, väärä: ${passPoints}p`
+}));
+
 const clamp = (v, min, max) => Math.max(min, Math.min(max, v));
 
 const sleep = time => new Promise(res => setTimeout(res, time));
@@ -19,16 +24,18 @@ const sleep = time => new Promise(res => setTimeout(res, time));
 new Vue({
   el: '#root',
   data: {
-    view: 'settings',
+    view: 'round-lobby',
     wordSets: WORD_SETS,
     selectedWordSet: WORD_SETS[0],
+    modes: MODES,
+    selectedMode: MODES[0],
     currentTeamIndex: 0,
-    // teams: [{ name: 'rocket', color: '#51ed80', points: 0, rank: null }, { name: 'paw', color: '#51ed80', points: 99, rank: null }, { name: 'beer', color: '#FF9580', points: 65, rank: null }, { name: 'cat', color: '#FF9580', points: 80, rank: null }],
-    teams: [],
-    colors: ['#51ed80', '#5276E4', '#CE6ED5', '#FF73AC', '#FF9580', '#FFC763', '#F9F871'],
+    // teams: [],
+    teams: [{ name: 'cat', color: 'red', points: 15, rank: null }],
+    colors: ['#51ed80', '#3bccc2', '#5276E4', '#CE6ED5', '#FF73AC', '#e65755', '#FFC763', '#F9F871', '#9eada2'],
     showTeamOptions: false,
     selectedTeamOption: null,
-    teamOptions: ['paw', 'cat', 'hippo', 'tree', 'graduation-cap', 'rocket', 'broom', 'anchor', 'cocktail', 'beer', 'skull-crossbones', 'bicycle', 'bomb', 'biohazard', 'bug', 'car', 'carrot', 'poo', 'bullhorn', 'glasses'],
+    teamOptions: ['paw', 'cat', 'hippo', 'graduation-cap', 'rocket', 'broom', 'anchor', 'cocktail', 'beer', 'skull-crossbones', 'bicycle', 'bomb', 'biohazard', 'bug', 'carrot', 'poo', 'bullhorn', 'glasses'],
     consumedIndexes: [],
     words: [],
     guessedWords: [],
@@ -69,7 +76,7 @@ new Vue({
     },
     currentTeam() {
       return this.teams[this.currentTeamIndex];
-    }
+    },
   },
   methods: {
     async confirmSettings() {
@@ -134,10 +141,10 @@ new Vue({
       this.animatingPoints = true;
       this.view = 'round-lobby';
 
-      await sleep(1000);
+      await sleep(500);
       this.currentTeam.points = clamp(this.currentTeam.points + this.roundPoints, 0, this.maxPoints);
       this.roundPoints = 0;
-      await sleep(1000);
+      await sleep(500);
 
       if (this.currentTeam.points === this.maxPoints) {
         const maxRank = this.teams.reduce((maxRank, team) => Math.max(maxRank, team.rank || 0), 0);
@@ -163,13 +170,17 @@ new Vue({
     },
     handleCorrectAnswer() {
       this.guessedWords.push(this.currentWord);
-      this.roundPoints += this.successPoints;
+      this.roundPoints += this.selectedMode.correctPoints;
       this.randomizeWordIndex();
     },
     handleWrongAnswer() {
       this.passedWords.push(this.currentWord);
-      this.roundPoints += this.failPoints;
+      this.roundPoints += this.selectedMode.passPoints;
       this.randomizeWordIndex();
+    },
+    skipRound() {
+      this.timer = 0;
+      this.handleTimeEnd();
     },
     randomizeWordIndex() {
       const element = document.querySelector('.current-word');

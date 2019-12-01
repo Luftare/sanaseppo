@@ -31,10 +31,24 @@
 <body>
   <div id="root">
     <div v-if="view === 'settings'" class="view">
-      <h1>Valitse aihe</h1>
-      <select v-model="selectedWordSet">
-        <option v-for="wordSet in wordSets" :value="wordSet">{{wordSet.label}}</option>
-      </select>
+      <h1>Peliasetukset</h1>
+
+      <div class="container">
+
+        <div class="container container--dense">
+          <label>Sanat</label>
+          <select v-model="selectedWordSet">
+            <option v-for="wordSet in wordSets" :value="wordSet">{{wordSet.label}}</option>
+          </select>
+        </div>
+
+        <div class="container container--dense">
+          <label>Pisteytys</label>
+          <select v-model="selectedMode">
+            <option v-for="mode in modes" :value="mode">{{mode.label}}</option>
+          </select>
+        </div>
+      </div>
 
       <button class="button" :class="{ 'button--disabled': loading }" @click="confirmSettings"><i
           class="fas fa-check"></i> Jatka</button>
@@ -48,7 +62,7 @@
           <div v-for="team in teams" class="team-option shake" :style="{ background: team.color }"
             @click="removeTeam(team)">
             <i class="fas" :class="['fa-' + team.name]"></i>
-            <div class="badge"><i class="fas fa-times fa--fail"></i></div>
+            <div class="badge"><i class="fas fa-times"></i></div>
           </div>
         </div>
         <button class="button button--small button--success" @click="showTeamOptionsModal"><i
@@ -117,10 +131,9 @@
 
     <div v-if="view === 'guess-word'" class="view">
       <div class="timer-container">
-        <i class="fas fa-stopwatch"></i>
+        <i class="fas fa-stopwatch" @click="skipRound"></i>
         <div class="timer" :style="{ width: timerStyle }"></div>
       </div>
-
 
       <div class="current-word">{{currentWord}}</div>
 
@@ -140,6 +153,8 @@
         <div class="words">
           <div v-for="word in passedWords" class="word">{{word}}</div>
         </div>
+
+        <h2>= {{roundPoints}} pistettä</h2>
       </div>
       <button class="button" @click="countRoundPoints"><i class="fas fa-check"></i> Jatka</button>
     </div>
