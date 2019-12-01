@@ -97,6 +97,12 @@ new Vue({
       this.loading = false;
       this.view = 'new-game';
     },
+    passTurn(teamIndex) {
+      if (this.currentTeamIndex === teamIndex) return;
+      if (!confirm('Haluatko siirtää vuoron toiselle joukkueelle?')) return;
+
+      this.currentTeamIndex = teamIndex;
+    },
     newGame() {
       if (!this.gameOver && !confirm('Haluatko lopettaa nykyisen pelin?')) return;
 
