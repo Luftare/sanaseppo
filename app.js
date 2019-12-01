@@ -24,14 +24,13 @@ const sleep = time => new Promise(res => setTimeout(res, time));
 new Vue({
   el: '#root',
   data: {
-    view: 'round-lobby',
+    view: 'settings',
     wordSets: WORD_SETS,
     selectedWordSet: WORD_SETS[0],
     modes: MODES,
     selectedMode: MODES[0],
     currentTeamIndex: 0,
-    // teams: [],
-    teams: [{ name: 'cat', color: 'red', points: 15, rank: null }],
+    teams: [],
     colors: ['#51ed80', '#3bccc2', '#5276E4', '#CE6ED5', '#FF73AC', '#e65755', '#FFC763', '#F9F871', '#9eada2'],
     showTeamOptions: false,
     selectedTeamOption: null,
