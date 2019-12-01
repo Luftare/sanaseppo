@@ -1,10 +1,11 @@
 const STATIC_CACHE_NAME = 'static-v1';
 const retainedCacheNames = [STATIC_CACHE_NAME];
 
-const staticAssets = ['/assets/audio/correct.wav', '/assets/audio/wrong.wav', '/assets/audio/tap.wav', '/assets/audio/victory.wav', '/assets/audio/bling.wav', '/assets/audio/rise.wav', '/assets/audio/fall.wav'];
+const staticAssets = ['/', '/assets/audio/correct.wav', '/assets/audio/wrong.wav', '/assets/audio/tap.wav', '/assets/audio/victory.wav', '/assets/audio/bling.wav', '/assets/audio/rise.wav', '/assets/audio/fall.wav'];
 
 self.addEventListener('install', e => {
   e.waitUntil(cacheStaticAssets());
+  self.skipWaiting();
 });
 
 self.addEventListener('activate', e => {

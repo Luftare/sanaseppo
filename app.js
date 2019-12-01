@@ -4,7 +4,10 @@ function registerServiceWorker() {
   if (serviceWorkerSupported) {
     navigator.serviceWorker
       .register('sw.js')
-      .then(reg => console.log('service worker registered'))
+      .then(reg => {
+        reg.update();
+        console.log('service worker registered')
+      })
       .catch(err => console.log('service worker not registered', err));
   }
 }
@@ -40,7 +43,7 @@ const WORD_SETS = [{
   url: 'api/finnish-animals.json'
 }];
 
-const MODES = [[10, -1], [5, -1], [5, 0], [10, -10]].map(([correctPoints, passPoints]) => ({
+const MODES = [[10, -1], [5, -1], [3, -1], [3, 0], [5, -5]].map(([correctPoints, passPoints]) => ({
   correctPoints, passPoints,
   label: `Oikea: +${correctPoints}p, väärä: ${passPoints}p`
 }));
@@ -75,7 +78,7 @@ new Vue({
     loading: false,
     roundDuration: 60000,
     tickInterval: 100,
-    maxPoints: 100,
+    maxPoints: 300,
     roundPoints: 0,
     successPoints: 5,
     failPoints: -1
@@ -262,6 +265,7 @@ new Vue({
         index = this.getRandomWordIndex();
       }
 
+      this.consumedIndexes.push(index);
       this.wordIndex = index;
     },
     getRandomWordIndex() {
