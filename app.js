@@ -22,9 +22,11 @@ function registerServiceWorker() {
       .register('sw.js')
       .then(reg => {
         reg.update();
-        console.log('service worker registered')
+        console.log('Service worker registered.');
       })
       .catch(err => console.log('service worker not registered', err));
+  } else {
+    console.log('Skipping service worker.');
   }
 }
 

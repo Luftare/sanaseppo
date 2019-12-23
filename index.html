@@ -50,8 +50,8 @@
         </div>
       </div>
 
-      <button class="button" :class="{ 'button--disabled': loading }" @click="confirmSettings"><i
-          class="fas fa-check"></i> Jatka</button>
+      <button class="button" :class="{ 'button--disabled': loading }" @click="confirmSettings"
+        data-e2e-confirm-settings><i class="fas fa-check"></i> Jatka</button>
     </div>
 
     <div v-if="view === 'new-game'" class="view">
@@ -60,28 +60,30 @@
       <div class="container">
         <div class="team-options">
           <div v-for="team in teams" class="team-option shake" :style="{ background: team.color }"
-            @click="removeTeam(team)">
+            @click="removeTeam(team)" v-bind:data-e2e-team="team.name">
             <i class="fas" :class="['fa-' + team.name]"></i>
             <div class="badge"><i class="fas fa-times"></i></div>
           </div>
         </div>
-        <button class="button button--small button--success" @click="showTeamOptionsModal"><i
+        <button class="button button--small button--success" @click="showTeamOptionsModal" data-e2e-add-team><i
             class="fas fa-user-plus"></i> Lisää joukkue</button>
       </div>
 
-      <button class="button" :class="{ 'button--disabled': teams.length === 0 }" @click="startGame"><i
-          class="fas fa-check"></i>
+      <button class="button" :class="{ 'button--disabled': teams.length === 0 }" @click="startGame"
+        data-e2e-confirm-teams><i class="fas fa-check"></i>
         Jatka</button>
 
       <div class="modal" v-if="showTeamOptions">
         <div class="modal-box">
           <h3>Valitse kuva</h3>
           <div class="team-options">
-            <div v-for="teamOption in availableTeams" class="team-option" @click="selectTeamOption(teamOption)">
+            <div v-for="teamOption in availableTeams" class="team-option" @click="selectTeamOption(teamOption)"
+              v-bind:data-e2e-team-icon-option="teamOption">
               <i class="fas" :class="['fa-' + teamOption]"></i>
             </div>
           </div>
-          <button class="button button--fail button--small" @click="cancelAddTeam"><i class="fas fa-times"></i>
+          <button class="button button--fail button--small" @click="cancelAddTeam" data-e2e-cancel-select-team-icon><i
+              class="fas fa-times"></i>
             Peruuta</button>
         </div>
       </div>
@@ -91,11 +93,12 @@
           <h3>Valitse väri</h3>
           <div class="team-options">
             <div v-for="color in colors" class="team-option" :style="{ background: color }"
-              @click="selectTeamColor(color)">
+              @click="selectTeamColor(color)" v-bind:data-e2e-team-color-option="color">
               <i class="fas" :class="['fa-' + selectedTeamOption]"></i>
             </div>
           </div>
-          <button class="button button--fail button--small" @click="cancelAddTeam"><i class="fas fa-times"></i>
+          <button class="button button--fail button--small" @click="cancelAddTeam" data-e2e-cancel-select-team-color><i
+              class="fas fa-times"></i>
             Peruuta</button>
         </div>
       </div>
@@ -104,14 +107,15 @@
     <div v-if="view === 'round-lobby'" class="view view--scores">
       <div class="top-bar">
         <button @click="newGame" class="button button--fail button--small"
-          :class="{ 'button--disabled': animatingPoints }"><i class="fas fa-redo"></i> Uusi
+          :class="{ 'button--disabled': animatingPoints }" data-e2e-new-game><i class="fas fa-redo"></i> Uusi
           peli</button>
       </div>
 
       <div class="container">
         <div v-for="(team, i) in teams" class="team-row"
           :class="{ 'team-row--disabled': team.points >= maxPoints && currentTeamIndex !== i }">
-          <div class="team-avatar" :class="{ 'pulsate': currentTeamIndex === i && !gameOver }" @click="passTurn(i)">
+          <div class="team-avatar" :class="{ 'pulsate': currentTeamIndex === i && !gameOver }" @click="passTurn(i)"
+            v-bind:data-e2e-team="team.name">
             <i class="fas" :class="['fa-' + team.name]"></i>
             <span v-if="!!team.rank" class="badge"
               :style="{ background: ['orange', 'grey', 'brown', 'black'][Math.min(team.rank - 1, 3)] }">{{team.rank}}.</span>
@@ -119,45 +123,50 @@
 
           <div class="points-bar-container">
             <div class="points-bar" :style="{ background: team.color, width: 100 * (team.points / maxPoints) + '%' }">
-              <span>{{team.points}}</span>
+              <span v-bind:data-e2e-team-points="team.points">{{team.points}}</span>
             </div>
           </div>
         </div>
       </div>
 
-      <button @click="startRound" class="button" :class="{ 'button--disabled': animatingPoints || gameOver }"><i
-          class="fas" :class="['fa-' + currentTeam.name]"></i> Pelaa</button>
+      <button @click="startRound" class="button" :class="{ 'button--disabled': animatingPoints || gameOver }"
+        v-bind:data-e2e-start-round="currentTeam.name"><i class="fas" :class="['fa-' + currentTeam.name]"></i>
+        Pelaa</button>
     </div>
 
     <div v-if="view === 'guess-word'" class="view">
       <div class="timer-container">
-        <i class="fas fa-stopwatch" @click="skipRound"></i>
+        <i class="fas fa-stopwatch" @click="skipRound" data-e2e-end-round></i>
         <div class="timer" :style="{ width: timerStyle }"></div>
       </div>
 
       <div class="current-word">{{currentWord}}</div>
 
       <div class="answer-buttons">
-        <button class="button button--fail" @click="handleWrongAnswer"><i class="fas fa-times"></i> Väärin</button>
+        <button class="button button--fail" @click="handleWrongAnswer" data-e2e-wrong-answer><i
+            class="fas fa-times"></i> Väärin</button>
         <button class="button button--success" :class="{ 'button--disabled': guessTimeout }"
-          @click="handleCorrectAnswer"><i class="fas fa-check"></i> Oikein</button>
+          @click="handleCorrectAnswer" data-e2e-correct-answer><i class="fas fa-check"></i> Oikein</button>
       </div>
     </div>
 
     <div v-if="view === 'round-recap'" class="view">
       <div class="container">
-        <h2><i class="fas fa-check fa--success"></i> Oikein {{guessedWords.length}}</h2>
+        <h2><i class="fas fa-check fa--success"></i> Oikein <span
+            v-bind:data-e2e-guessed-words-count="guessedWords.length">{{guessedWords.length}}</span></h2>
         <div class="words">
           <div v-for="word in guessedWords" class="word">{{word}}</div>
         </div>
-        <h2><i class="fas fa-times fa--fail"></i> Väärin {{passedWords.length}}</h2>
+        <h2><i class="fas fa-times fa--fail"></i> Väärin <span
+            v-bind:data-e2e-passed-words-count="passedWords.length">{{passedWords.length}}</span></h2>
         <div class="words">
           <div v-for="word in passedWords" class="word">{{word}}</div>
         </div>
 
-        <h2>= {{roundPoints}} pistettä</h2>
+        <h2>= <span v-bind:data-e2e-total-points="roundPoints">{{roundPoints}}</span> pistettä</h2>
       </div>
-      <button class="button" @click="countRoundPoints"><i class="fas fa-check"></i> Jatka</button>
+      <button class="button" @click="countRoundPoints" data-e2e-total-points-continue><i class="fas fa-check"></i>
+        Jatka</button>
     </div>
   </div>
 </body>
