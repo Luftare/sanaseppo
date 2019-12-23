@@ -1,3 +1,19 @@
+const USED_WORD_INDEXES = 'USED_WORD_INDEXES';
+
+const WORD_SETS = [{
+  label: 'Helppoja sanoja',
+  url: 'api/easy.json'
+}, {
+  label: 'Suomen kielen sanat',
+  url: 'api/words.json'
+}, {
+  label: 'Maiden nimet',
+  url: 'api/nations.json'
+}, {
+  label: 'Nisäkkäät, linnut ja kalat',
+  url: 'api/finnish-animals.json'
+}];
+
 function registerServiceWorker() {
   const serviceWorkerSupported = 'serviceWorker' in navigator;
 
@@ -29,19 +45,40 @@ window.addEventListener('resize', () => {
   setTimeout(handleResize, 500);
 });
 
-const WORD_SETS = [{
-  label: 'Helppoja sanoja',
-  url: 'api/easy.json'
-}, {
-  label: 'Suomen kielen sanat',
-  url: 'api/words.json'
-}, {
-  label: 'Maiden nimet',
-  url: 'api/nations.json'
-}, {
-  label: 'Nisäkkäät, linnut ja kalat',
-  url: 'api/finnish-animals.json'
-}];
+const db = {
+  loadConsumedIndexes() {
+    const item = localStorage.getItem(USED_WORD_INDEXES);
+
+    if (item) {
+      console.log('Has item', item);
+      const persistedIndexes = JSON.parse(item);
+
+      WORD_SETS.forEach((item) => {
+        const missingWordSet = !persistedIndexes.find(persistedItem => item.url === persistedItem.url);
+
+        if (missingWordSet) {
+          persistedIndexes.push({
+            url: item.url,
+            indexes: []
+          });
+        }
+      });
+
+      return persistedIndexes;
+    } else {
+      console.log('no item...')
+      return WORD_SETS.map(({ url }) => ({
+        url,
+        indexes: []
+      }));
+    }
+  },
+  saveConsumedIndexes(consumedIndexes) {
+    console.log('Saving...', consumedIndexes);
+    const item = JSON.stringify(consumedIndexes);
+    localStorage.setItem(USED_WORD_INDEXES, item);
+  }
+}
 
 const MODES = [[10, -1], [5, -1], [3, -1], [3, 0], [5, -5]].map(([correctPoints, passPoints]) => ({
   correctPoints, passPoints,
@@ -66,7 +103,7 @@ new Vue({
     showTeamOptions: false,
     selectedTeamOption: null,
     teamOptions: ['paw', 'cat', 'hippo', 'graduation-cap', 'rocket', 'broom', 'anchor', 'cocktail', 'beer', 'skull-crossbones', 'bicycle', 'bomb', 'biohazard', 'bug', 'carrot', 'poo', 'bullhorn', 'glasses'],
-    consumedIndexes: [],
+    wordSetsConsumedIndexes: [],
     words: [],
     guessedWords: [],
     passedWords: [],
@@ -85,6 +122,7 @@ new Vue({
   },
   async mounted() {
     registerServiceWorker();
+    this.wordSetsConsumedIndexes = db.loadConsumedIndexes();
 
     setTimeout(handleResize, 500);
 
@@ -114,6 +152,9 @@ new Vue({
     currentTeam() {
       return this.teams[this.currentTeamIndex];
     },
+    consumedWordsInstace() {
+      return this.wordSetsConsumedIndexes.find(set => this.selectedWordSet.url === set.url);
+    }
   },
   methods: {
     async confirmSettings() {
@@ -182,6 +223,7 @@ new Vue({
     handleTimeEnd() {
       this.view = 'round-recap';
       sound('bling.wav');
+      db.saveConsumedIndexes(this.wordSetsConsumedIndexes);
     },
     async countRoundPoints() {
       this.animatingPoints = true;
@@ -253,19 +295,22 @@ new Vue({
         }, 400);
       }
 
-      const wordsLeft = this.words.length - this.consumedIndexes.length;
+      const wordsLeft = this.words.length - this.consumedWordsInstace.indexes.length;
 
-      if (wordsLeft < 10) {
-        this.consumedIndexes = [];
+      const shouldResetWords = wordsLeft < 30 || this.consumedWordsInstace.indexes.length > 2000;
+
+      if (shouldResetWords) {
+        this.consumedWordsInstace.indexes = [];
       }
 
       let index = this.getRandomWordIndex();
 
-      while (this.consumedIndexes.includes(index)) {
+      while (this.consumedWordsInstace.indexes.includes(index)) {
         index = this.getRandomWordIndex();
       }
 
-      this.consumedIndexes.push(index);
+      this.consumedWordsInstace.indexes.push(index);
+
       this.wordIndex = index;
     },
     getRandomWordIndex() {
