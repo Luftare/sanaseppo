@@ -1,4 +1,4 @@
-// node clearList.js api/test.json
+// node clearList.js api/easy.json
 const fs = require('fs');
 
 const [, , fileName] = process.argv;
