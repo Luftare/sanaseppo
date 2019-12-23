@@ -50,7 +50,6 @@ const db = {
     const item = localStorage.getItem(USED_WORD_INDEXES);
 
     if (item) {
-      console.log('Has item', item);
       const persistedIndexes = JSON.parse(item);
 
       WORD_SETS.forEach((item) => {
@@ -66,7 +65,6 @@ const db = {
 
       return persistedIndexes;
     } else {
-      console.log('no item...')
       return WORD_SETS.map(({ url }) => ({
         url,
         indexes: []
@@ -74,7 +72,6 @@ const db = {
     }
   },
   saveConsumedIndexes(consumedIndexes) {
-    console.log('Saving...', consumedIndexes);
     const item = JSON.stringify(consumedIndexes);
     localStorage.setItem(USED_WORD_INDEXES, item);
   }
